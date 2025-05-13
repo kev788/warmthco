@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel One</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "DM Sans", sans-serif;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 4%;
+        position: relative;
+        background-color: black;
+      }
+
+      .nava {
+        display: flex;
+        gap: 20px;
+      }
+      .nava a {
+        padding: 10px 12px;
+        color: white;
+        font-family: "Playfair Display", serif;
+        font-weight: 500px;
+        font-style: italic;
+      }
+      .logocontain {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 10px;
+      }
+      .logo {
+        width: 150px;
+        padding-top: 3px;
+      }
+      .classification {
+        margin: 0px;
+        padding: 12px;
+        text-decoration: underline;
+      }
+
+      .bodyone {
+        display: flex;
+        justify-content: center;
+        gap: 2px;
+      }
+      .bodyone img {
+        width: 35%;
+        height: 500px;
+        object-fit: cover;
+      }
+      .bodytwo {
+        display: flex;
+        gap: 20px;
+        padding-top: 20px;
+        padding-left: 150px;
+        padding-right: 150px;
+      }
+      .left {
+        width: 75%;
+        height: auto;
+      }
+      .right {
+        width: 25%;
+        height: 300px;
+        padding-top: 0px;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 22px;
+        border-radius: 12px;
+        background-color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #eee;
+      }
+
+      #map {
+        height: 420px;
+
+        margin: 15px;
+      }
+
+      .rooms {
+        margin-top: 20px;
+        padding: 15px;
+        margin: 15px;
+        border-radius: 12px;
+        display: flex;
+        gap: 15px;
+        height: auto;
+        background-color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #eee;
+      }
+
+      .rooms img {
+        width: 300px;
+        object-fit: cover;
+        border-radius: 8px;
+        height: 250px;
+      }
+
+      .roomsDetails {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+        font-size: 14px;
+        padding-right: 10px;
+      }
+
+      .roomsDetails h2 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .roomsDetails p {
+        margin: 5px 0;
+        line-height: 1.4;
+      }
+
+      .roomsDetails label {
+        margin-right: 15px;
+        font-size: 14px;
+      }
+
+      .roomsDetails input[type="radio"] {
+        margin-right: 5px;
+      }
+
+      .roomsDetails .price {
+        font-size: 22px;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+      .roomsDetails .noRefund {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .rooms button {
+        align-self: flex-end;
+        width: 100px;
+        background: #000;
+        color: white;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      #viewRoomsBtnn {
+        width: 100%;
+        bottom: 10px;
+        background-color: #000;
+        border: none;
+        color: white;
+        text-decoration: none;
+        font-size: 15px;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 5px;
+        height: 55px;
+      }
+      .textdes {
+        margin: 15px;
+      }
+
+      .textTit2 {
+        margin: 15px;
+        font-size: 25px;
+      }
+      .radioo {
+        padding-top: 5px;
+      }
+
+      .noRefund {
+        font-style: italic;
+        font-weight: bold;
+        color: #000;
+      }
+
+      @media screen and (max-width: 1050px) {
+        .bodytwo {
+          flex-direction: column-reverse;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+
+        .left,
+        .right {
+          width: 100%;
+        }
+
+        .right {
+          margin-bottom: 20px;
+          height: auto;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .rooms {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .rooms img {
+          width: 100%;
+          height: auto;
+        }
+
+        .roomsDetails {
+          width: 100%;
+          padding-top: 10px;
+        }
+      }
+
+      #goTop {
+        text-align: center;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      .footer {
+        background-color: black;
+        padding: 10px 0;
+        color: white;
+        font-family: "Playfair Display", serif;
+      }
+
+      .footerContent {
+        display: flex;
+        justify-content: space-between;
+        max-width: 200px;
+        margin: 0 auto;
+        width: 100%;
+        padding: 15px 0;
+      }
+
+      .footerSection h4 {
+        font-size: 14px;
+        font-style: italic;
+        margin-bottom: 10px;
+        background-color: black;
+      }
+
+      .footerSection p {
+        margin: 4px 0;
+        font-size: 13px;
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="logocontain">
+        <a href="index.html"><img class="logo" src="warmthcologo.png" /></a>
+      </div>
+      <div class="nava">
+        <a href="index.html">Home</a>
+        <a href="listhotel.html">Lodgings</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="checkout.html">Check Out</a>
+      </div>
+    </div>
+    <a href="listhotel.html">
+      <p class="classification">Warmthco > Tokyo > Aman Hotel</p></a
+    >
+    <div class="bodyone">
+      <img src="hotelonelist.PNG" />
+      <img src="hotellisttwo.PNG" />
+      <img src="hyattkyoto.jpg" />
+    </div>
+    <div class="bodytwo">
+      <div class="left">
+        <h1 class="textdes"><b>Regency Kyoto</b></h1>
+        <p class="textdes">
+          Here’s a hotel that forces you to dispense with a couple of easy
+          generalizations. The first is the idea that the big chains guarantee a
+          dull experience — not a bad rule of thumb but one with many, many
+          exceptions. And the second is the idea that in Japan, Tokyo is the
+          center of all that’s modern and forward-thinking while Kyoto remains
+          frozen in the feudal past. Again, true enough, to a point — but as the
+          Hyatt Regency Kyoto proves, it’s a bit more complicated than that.
+          It’s obviously pretty far from the image, conjured by the name, of the
+          standard Western luxury hotel. And while it’s quite recognizably
+          Japanese, it’s an exceedingly contemporary update of the traditional
+          style — the design, by the superstar Japanese firm Super Potato,
+          expresses its clean modern lines in old-school bamboo, shoji screens
+          and tatami floors. Surprising, yet nowhere near alienating, and
+          intimately connected with its place in the world — in a nutshell
+          that’s what hotel design should be. What’s best is that underneath it
+          all it’s got no problem living up to the high standards of the Hyatt
+          group’s international luxury offerings. Rooms are spacious and
+          comfortable, the restaurants are first-class, and the spa and fitness
+          center are state-of-the-art.
+        </p>
+        <div id="map"></div>
+        <p class="textTit2"><b>Rooms & Rates</b></p>
+
+        <div class="rooms">
+          <img src="rr1.jpg" alt="Regular" />
+          <div class="roomsDetails">
+            <div>
+              <h2>Regular</h2>
+              <p>Fits 2 People<br />Up To 2 Bed<br />350 ft/32 m</p>
+              <p>
+                <b>Includes</b><br />
+                Adjoining room on request (charges apply) Air conditioning
+                Bathtub/shower combo Carpeted floor Coffee/tea Crib (on request)
+                Desk Hairdryer Minibar Minifridge Pharmacopia bath amenities
+                Phone Safe Television Wake up service
+              </p>
+              <div class="radioo">
+                <label
+                  ><input type="checkbox" name="breakfast" /> Breakfast</label
+                >
+                <label
+                  ><input type="checkbox" name="doubleBed" /> Double Bed</label
+                >
+                <label><input type="checkbox" name="pickUp" /> Pick Up</label>
+              </div>
+              <p>
+                <span>IDR</span>
+                <span class="price">2100000</span>
+              </p>
+              <p class="noRefund">Per night. Taxes included.</p>
+            </div>
+            <a href="checkout.html"><button id="viewRoomsBtn">Book</button></a>
+          </div>
+        </div>
+        <div class="rooms">
+          <img src="rr2.jpg" alt="Suite" />
+          <div class="roomsDetails">
+            <div>
+              <h2>Suite</h2>
+              <p>Fits 2 People<br />Up To 2 Bed<br />350 ft/32 m</p>
+              <p>
+                <b>Includes</b><br />
+                Adjoining room on request (charges apply) Air conditioning
+                Bathtub/shower combo Carpeted floor Coffee/tea Crib (on request)
+                Desk Hairdryer Minibar Minifridge Pharmacopia bath amenities
+                Phone Safe Television Wake up service
+              </p>
+              <div class="radioo">
+                <label
+                  ><input type="checkbox" name="breakfast" /> Breakfast</label
+                >
+                <label
+                  ><input type="checkbox" name="doubleBed" /> Double Bed</label
+                >
+                <label><input type="checkbox" name="pickUp" /> Pick Up</label>
+              </div>
+              <p>
+                <span>IDR</span>
+                <span class="price">2500000</span>
+              </p>
+              <p class="noRefund">Per night. Taxes included.</p>
+            </div>
+            <a href="checkout.html"><button id="viewRoomsBtn">Book</button></a>
+          </div>
+        </div>
+        <div class="rooms">
+          <img src="rr3.jpg" alt="Resort" />
+          <div class="roomsDetails">
+            <div>
+              <h2>Resort</h2>
+              <p>Fits 2 People<br />Up To 2 Bed<br />350 ft/32 m</p>
+              <p>
+                <b>Includes</b><br />
+                Adjoining room on request (charges apply) Air conditioning
+                Bathtub/shower combo Carpeted floor Coffee/tea Crib (on request)
+                Desk Hairdryer Minibar Minifridge Pharmacopia bath amenities
+                Phone Safe Television Wake up service
+              </p>
+              <div class="radioo">
+                <label
+                  ><input type="checkbox" name="breakfast" /> Breakfast</label
+                >
+                <label
+                  ><input type="checkbox" name="doubleBed" /> Double Bed</label
+                >
+                <label><input type="checkbox" name="pickUp" /> Pick Up</label>
+              </div>
+              <p>
+                <span>IDR</span>
+                <span class="price">3500000</span>
+              </p>
+              <p class="noRefund">Per night. Taxes included.</p>
+            </div>
+            <a href="checkout.html"><button id="viewRoomsBtn">Book</button></a>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <div>
+          <h2>Book Your Stay</h2>
+          <label>Check-in Date:</label><br />
+          <p id="checkInDate"></p>
+          <label>Check-out Date:</label><br />
+          <p id="checkOutDate"></p>
+          <br />
+          <button id="viewRoomsBtnn">View Rooms</button>
+        </div>
+      </div>
+    </div>
+    <br /><br />
+    <p id="goTop">Back To Top</p>
+
+    <br />
+    <div class="footer">
+      <div class="footerContent">
+        <div class="footerSection">
+          <h4>Pages</h4>
+          <a href="index.html"><p>HOME</p></a>
+          <a href="listhotel.html"><p>BOOK NOW</p></a>
+          <a href="aboutus.html"><p>ABOUT US</p></a>
+        </div>
+        <div class="footerSection">
+          <h4>Reservations</h4>
+          <p>081249518298</p>
+          <p>WARMTHCO@</p>
+          <p>GMAIL.COM</p>
+        </div>
+      </div>
+    </div>
+    <script src="centerscript.js"></script>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const map = L.map("map").setView([35.0116, 135.7681], 13);
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org">OpenStreetMap</a> contributors',
+          maxZoom: 19,
+        }).addTo(map);
+
+        const marker = L.marker([35.0116, 135.7681])
+          .addTo(map)
+          .bindPopup("Regency Kyoto")
+          .openPopup();
+      });
+
+      document.getElementById("viewRoomsBtnn").addEventListener("click", () => {
+        document.querySelector(".rooms").scrollIntoView({ behavior: "smooth" });
+      });
+
+      document.getElementById("goTop").addEventListener("click", () => {
+        document
+          .querySelector(".navbar")
+          .scrollIntoView({ behavior: "smooth" });
+      });
+
+      const Breakfast = 200000;
+      const pickUP = 200000;
+
+      window.onload = function () {
+        const checkIn = localStorage.getItem("dateCheckIn");
+        const checkOut = localStorage.getItem("dateCheckOut");
+
+        document.getElementById("checkInDate").textContent =
+          checkIn || "Not set";
+        document.getElementById("checkOutDate").textContent =
+          checkOut || "Not set";
+      };
+
+      const roomElements = document.querySelectorAll(".rooms");
+
+      function getBasePrice(roomElement) {
+        return parseInt(roomElement.dataset.basePrice, 10);
+      }
+
+      function calculateTotal(roomElement) {
+        let total = getBasePrice(roomElement);
+        const breakfast = roomElement.querySelector(
+          'input[name="breakfast"]'
+        ).checked;
+        const pickup = roomElement.querySelector(
+          'input[name="pickUp"]'
+        ).checked;
+
+        if (breakfast) total += Breakfast;
+        if (pickup) total += pickUP;
+
+        return total;
+      }
+
+      function updatePrice(roomElement) {
+        const priceElement = roomElement.querySelector(".price");
+        priceElement.textContent = calculateTotal(roomElement);
+      }
+
+      roomElements.forEach((roomElement) => {
+        const priceElement = roomElement.querySelector(".price");
+        roomElement.dataset.basePrice = priceElement.textContent;
+
+        const checkboxes = roomElement.querySelectorAll(
+          'input[type="checkbox"]'
+        );
+        checkboxes.forEach((checkbox) => {
+          checkbox.addEventListener("change", () => {
+            updatePrice(roomElement);
+          });
+        });
+
+        roomElement.querySelector("button").addEventListener("click", () => {
+          const roomType = roomElement
+            .querySelector(".roomsDetails h2")
+            .textContent.trim();
+          const breakfast = roomElement.querySelector('input[name="breakfast"]')
+            .checked
+            ? "Breakfast"
+            : "No Breakfast";
+          const doubleBed = roomElement.querySelector('input[name="doubleBed"]')
+            .checked
+            ? "Double Bed"
+            : "Single Bed";
+          const pickUp = roomElement.querySelector('input[name="pickUp"]')
+            .checked
+            ? "Pick Up"
+            : "No Pick Up";
+          const price = roomElement.querySelector(".price").textContent;
+
+          checkout = {
+            hotelName: document.querySelector(".textdes").textContent.trim(),
+            roomType,
+            breakfast,
+            doubleBed,
+            pickUp,
+            price,
+            checkIn: localStorage.getItem("dateCheckIn"),
+            checkOut: localStorage.getItem("dateCheckOut"),
+            guests: localStorage.getItem("guests"),
+            destination: localStorage.getItem("destination"),
+          };
+
+          console.log("Checkout Object:", checkout);
+
+          localStorage.setItem("checkoutData", JSON.stringify(checkout));
+        });
+      });
+    </script>
+  </body>
+</html>
