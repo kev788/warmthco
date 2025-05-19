@@ -155,6 +155,8 @@
         justify-content: center;
         align-items: center;
         gap: 20px;
+        position: relative;
+        overflow: hidden;
       }
 
       .bodytwooPicture {
@@ -167,6 +169,8 @@
         align-items: center;
         opacity: 0.4;
         padding: 20px;
+        transition: all 0.5s ease;
+        position: relative;
       }
 
       .bodytwooPicture img {
@@ -174,12 +178,17 @@
         height: 180px;
         object-fit: cover;
         margin: 15px 0;
+        transition: all 0.5s ease;
       }
 
       .bodytwooPicture.active {
         background-color: white;
         color: black;
         opacity: 1;
+      }
+
+      .bodytwooPicture:not(.active) img {
+        filter: grayscale(100%);
       }
 
       .bodytwooD {
@@ -208,6 +217,7 @@
         cursor: pointer;
         font-size: 20px;
       }
+
       .featuredCities {
         font-style: italic;
         margin-bottom: 10px;
@@ -389,7 +399,7 @@
         </p>
 
         <div class="bodytwoo">
-          <div class="bodytwooPicture gleft">
+          <div class="bodytwooPicture">
             <h5>KOBE</h5>
           </div>
           <div class="bodytwooPicture active">
@@ -398,9 +408,9 @@
             <p class="bodytwooD">
               Discover Tokyo's vibrant culture, cuisine, and skyline.
             </p>
-            <button class="bodytwooButton">VIEW PROPERTY</button>
+            <button class="bodytwooButton">Explore</button>
           </div>
-          <div class="bodytwooPicture gright">
+          <div class="bodytwooPicture">
             <h5>KYOTO</h5>
           </div>
         </div>
@@ -449,5 +459,113 @@
     </div>
 
     <div></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const cities = [
+          {
+            name: "KOBE",
+            image: "2.png",
+            description:
+              "Experience the charm of Kobe's harbor city and its famous beef.",
+          },
+          {
+            name: "TOKYO",
+            image: "1.png",
+            description:
+              "Discover Tokyo's vibrant culture, cuisine, and skyline.",
+          },
+          {
+            name: "KYOTO",
+            image: "3.png",
+            description:
+              "Immerse yourself in Kyoto's rich history and traditional culture.",
+          },
+          {
+            name: "OSAKA",
+            image: "4.png",
+            description:
+              "Enjoy Osaka's dynamic food scene and modern attractions.",
+          },
+          {
+            name: "NAGASAKI",
+            image: "5.png",
+            description:
+              "Explore Nagasaki's unique blend of Japanese and Western culture.",
+          },
+        ];
+
+        let currentIndex = 1;
+        const totalCities = cities.length;
+        let isAnimating = false;
+
+        function updateSlider() {
+          if (isAnimating) return;
+          isAnimating = true;
+
+          const pictures = document.querySelectorAll(".bodytwooPicture");
+          const cityNumber = document.querySelector(".bodytwooNum");
+
+          cityNumber.textContent = `${currentIndex + 1} / ${totalCities}`;
+
+          pictures.forEach((picture, index) => {
+            const cityIndex =
+              (currentIndex + index - 1 + totalCities) % totalCities;
+            const city = cities[cityIndex];
+
+            picture.innerHTML = "";
+
+            const cityName = document.createElement("h5");
+            cityName.textContent = city.name;
+            picture.appendChild(cityName);
+
+            const img = document.createElement("img");
+            img.src = city.image;
+            img.alt = city.name;
+            picture.appendChild(img);
+
+            if (index === 1) {
+              const description = document.createElement("p");
+              description.className = "bodytwooD";
+              description.textContent = city.description;
+              picture.appendChild(description);
+
+              const button = document.createElement("button");
+              button.className = "bodytwooButton";
+              button.textContent = "Explore";
+              picture.appendChild(button);
+            }
+
+            picture.className = "bodytwooPicture";
+            if (index === 1) {
+              picture.classList.add("active");
+            }
+          });
+
+          setTimeout(() => {
+            isAnimating = false;
+          }, 500);
+        }
+
+        document
+          .querySelector(".arrow:first-child")
+          .addEventListener("click", () => {
+            if (!isAnimating) {
+              currentIndex = (currentIndex - 1 + totalCities) % totalCities;
+              updateSlider();
+            }
+          });
+
+        document
+          .querySelector(".arrow:last-child")
+          .addEventListener("click", () => {
+            if (!isAnimating) {
+              currentIndex = (currentIndex + 1) % totalCities;
+              updateSlider();
+            }
+          });
+
+        updateSlider();
+      });
+    </script>
   </body>
 </html>
