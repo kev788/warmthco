@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Warmth.Co - Complete Your Reservation</title>
@@ -14,6 +24,7 @@
       body {
         margin: 0;
         padding: 0;
+        font-family: "DM Sans", sans-serif;
       }
       .navbar {
         display: flex;
@@ -23,11 +34,11 @@
         position: relative;
         background-color: black;
       }
-      .nava {
+      .navLinks {
         display: flex;
         gap: 20px;
       }
-      .nava a {
+      .navLinks a {
         text-decoration: none;
         padding: 10px 12px;
         text-decoration: none;
@@ -56,13 +67,13 @@
         font-weight: 500;
       }
 
-      .checkout-container {
+      .checkoutContainer {
         display: flex;
         gap: 30px;
         margin: 30px auto;
       }
 
-      .checkout-form {
+      .checkoutForm {
         flex: 2;
         background-color: white;
         padding: 30px;
@@ -70,7 +81,7 @@
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
       }
 
-      .checkout-summary {
+      .checkoutSummary {
         flex: 1;
         background-color: white;
         padding: 30px;
@@ -81,7 +92,7 @@
         height: fit-content;
       }
 
-      .section-title {
+      .sectionTitle {
         font-size: 22px;
         margin-bottom: 20px;
         color: black;
@@ -89,18 +100,18 @@
         border-bottom: 1px solid #eee;
       }
 
-      .form-group {
+      .formGroup {
         margin-bottom: 20px;
       }
 
-      .form-label {
+      .formLabel {
         display: block;
         margin-bottom: 8px;
         font-weight: 500;
         font-size: 14px;
       }
 
-      .form-input {
+      .formInput {
         width: 100%;
         padding: 12px 15px;
         border: 1px solid #ddd;
@@ -108,29 +119,29 @@
         font-size: 16px;
       }
 
-      .form-row {
+      .formRow {
         display: flex;
         gap: 15px;
       }
 
-      .form-row .form-group {
+      .formRow .formGroup {
         flex: 1;
       }
 
-      .reservation-details {
+      .reservationDetails {
         background-color: #f9f9f9;
         padding: 20px;
         border-radius: 8px;
         margin-bottom: 30px;
       }
 
-      .hotel-info {
+      .hotelInfo {
         display: flex;
         gap: 20px;
         margin-bottom: 20px;
       }
 
-      .hotel-image {
+      .hotelImage {
         width: 120px;
         height: 90px;
         background-color: #eee;
@@ -139,17 +150,17 @@
         border-radius: 4px;
       }
 
-      .hotel-text h3 {
+      .hotelText h3 {
         font-size: 18px;
         margin-bottom: 5px;
       }
 
-      .hotel-text p {
+      .hotelText p {
         color: #666;
         font-size: 14px;
       }
 
-      .key-badge {
+      .keyBadge {
         width: 25px;
         height: 25px;
         background-color: black;
@@ -163,46 +174,46 @@
         margin-right: 5px;
       }
 
-      .stay-details {
+      .stayDetails {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
         margin-top: 15px;
       }
 
-      .detail-item strong {
+      .detailItem strong {
         display: block;
         font-size: 14px;
         color: #666;
         margin-bottom: 5px;
       }
 
-      .detail-item span {
+      .detailItem span {
         font-weight: 500;
       }
 
-      .policy-item {
+      .policyItem {
         margin-bottom: 15px;
         padding-bottom: 15px;
         border-bottom: 1px solid #eee;
       }
 
-      .policy-item h4 {
+      .policyItem h4 {
         margin-bottom: 8px;
         font-size: 16px;
       }
 
-      .policy-item p {
+      .policyItem p {
         font-size: 14px;
         color: #555;
         line-height: 1.5;
       }
 
-      .checkbox-group {
+      .checkboxGroup {
         margin: 25px 0;
       }
 
-      .checkbox-label {
+      .checkboxLabel {
         display: flex;
         align-items: flex-start;
         gap: 10px;
@@ -210,22 +221,22 @@
         cursor: pointer;
       }
 
-      .checkbox-label input {
+      .checkboxLabel input {
         margin-top: 3px;
       }
 
-      .price-details {
+      .priceDetails {
         margin-bottom: 30px;
       }
 
-      .price-row {
+      .priceRow {
         display: flex;
         justify-content: space-between;
         margin-bottom: 10px;
         font-size: 14px;
       }
 
-      .price-row.total {
+      .priceRow.total {
         font-weight: bold;
         font-size: 16px;
         margin-top: 15px;
@@ -233,7 +244,7 @@
         border-top: 1px solid #eee;
       }
 
-      .submit-button {
+      .submitButton {
         width: 100%;
         padding: 15px;
         background-color: black;
@@ -246,7 +257,7 @@
         transition: background-color 0.3s;
       }
 
-      .submit-button:hover {
+      .submitButton:hover {
         background-color: #b30000;
       }
 
@@ -278,16 +289,16 @@
         background-color: black;
       }
       @media (max-width: 768px) {
-        .checkout-container {
+        .checkoutContainer {
           flex-direction: column;
         }
 
-        .form-row {
+        .formRow {
           flex-direction: column;
           gap: 0;
         }
 
-        .stay-details {
+        .stayDetails {
           grid-template-columns: 1fr;
         }
       }
@@ -296,132 +307,134 @@
   <body>
     <div class="header">
       <div class="navbar">
-        <div class="logocontain">
+        <div class="logoContainer">
           <a href="index.html"><img class="logo" src="warmthcologo.png" /></a>
         </div>
-        <div class="nava">
+        <div class="navLinks">
           <a href="index.html">Home</a>
           <a href="listhotel.html">Lodgings</a>
           <a href="aboutus.html">About Us</a>
           <a href="checkout.html">Check Out</a>
-
         </div>
       </div>
     </div>
 
-    <main class="container">
-      <div class="checkout-container">
-        <div class="checkout-form">
-          <h2 class="section-title">Complete Your Reservation</h2>
+    <div class="container">
+      <div class="checkoutContainer">
+        <div class="checkoutForm">
+          <h2 class="sectionTitle">Complete Your Reservation</h2>
 
-          <section class="contact-info">
-            <h3 class="section-title">Contact Information</h3>
-            <div class="form-group">
-              <label class="form-label">Full Name</label>
-              <input type="text" class="form-input" placeholder="John Doe" />
+          <section class="contactInfo">
+            <h3 class="sectionTitle">Contact Information</h3>
+            <div class="formGroup">
+              <label class="formLabel">Full Name</label>
+              <input type="text" class="formInput" required />
             </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Email Address</label>
-                <input
-                  type="email"
-                  class="form-input"
-                  placeholder="john@example.com"
-                />
+            <div class="formRow">
+              <div class="formGroup">
+                <label class="formLabel">Email Address</label>
+                <input type="email" class="formInput" required />
               </div>
-              <div class="form-group">
-                <label class="form-label">Phone Number</label>
-                <input
-                  type="tel"
-                  class="form-input"
-                  placeholder="+1 (555) 123-4567"
-                />
+              <div class="formGroup">
+                <label class="formLabel">Phone Number</label>
+                <input type="tel" class="formInput" required />
               </div>
             </div>
           </section>
 
-          <section class="address-info">
-            <h3 class="section-title">Address</h3>
-            <div class="form-group">
-              <label class="form-label">Street Address</label>
-              <input type="text" class="form-input" placeholder="123 Main St" />
+          <section class="addressInfo">
+            <h3 class="sectionTitle">Address</h3>
+            <div class="formGroup">
+              <label class="formLabel">Street Address</label>
+              <input type="text" class="formInput" required />
             </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">City</label>
-                <input type="text" class="form-input" placeholder="New York" />
+            <div class="formRow">
+              <div class="formGroup">
+                <label class="formLabel">City</label>
+                <input type="text" class="formInput" required />
               </div>
-              <div class="form-group">
-                <label class="form-label">State/Province</label>
-                <input type="text" class="form-input" placeholder="NY" />
+              <div class="formGroup">
+                <label class="formLabel">State/Province</label>
+                <input type="text" class="formInput" required />
               </div>
-              <div class="form-group">
-                <label class="form-label">ZIP/Postal Code</label>
-                <input type="text" class="form-input" placeholder="10001" />
+              <div class="formGroup">
+                <label class="formLabel">ZIP/Postal Code</label>
+                <input type="text" class="formInput" required />
               </div>
             </div>
-            <div class="form-group">
-              <label class="form-label">Country</label>
-              <select class="form-input">
-                <option>United States</option>
-                <option>Canada</option>
-                <option>United Kingdom</option>
-                <option>France</option>
-                <option>Japan</option>
-                <option>Other</option>
+            <div class="formGroup">
+              <label class="formLabel">Country</label>
+              <select class="formInput" required>
+                <option value="">Select a country</option>
+                <option value="Indonesia">Indonesia</option>
+                <option value="South Korea">South Korea</option>
+                <option value="Sweden">Sweden</option>
+                <option value="United States">United States</option>
+                <option value="Canada">Canada</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="France">France</option>
+                <option value="Japan">Japan</option>
+                <option value="Other">Other</option>
               </select>
             </div>
           </section>
 
-          <section class="reservation-details">
-            <h3 class="section-title">Reservation Details</h3>
-            <div class="hotel-info">
-              <div>         
-                  <img class="hotel-image" src="hotelonelist.png">
-                
+          <section class="reservationDetails">
+            <h3 class="sectionTitle">Reservation Details</h3>
+            <div class="hotelInfo">
+              <div>
+                <img class="hotelImage" src="bearhotel.jpg" />
               </div>
-              <div class="hotel-text">
-                <h3>Grand Hyatt Tokyo <span class="key-badge">3</span></h3>
-                <p>Japan</p>
+              <div class="hotelText">
+                <h3 id="hotelNames">Hotel Name</h3>
+                <p id="destinations">Destination</p>
               </div>
             </div>
-            <div class="stay-details">
-              <div class="detail-item">
+            <div class="stayDetails">
+              <div class="detailItem">
                 <strong>Check-in</strong>
-                <span>Friday, June 10, 2023</span>
+                <span id="checkIns">Not set</span>
               </div>
-              <div class="detail-item">
+              <div class="detailItem">
                 <strong>Check-out</strong>
-                <span>Monday, June 13, 2023</span>
+                <span id="checkOuts">Not set</span>
               </div>
-              <div class="detail-item">
+              <div class="detailItem">
                 <strong>Guests</strong>
-                <span>2 Adults</span>
+                <span id="guestss">Not set</span>
               </div>
-              <div class="detail-item">
+              <div class="detailItem">
                 <strong>Room Type</strong>
-                <span>Deluxe King Room</span>
+                <span id="roomTypes">Not set</span>
+              </div>
+              <div class="detailItem">
+                <strong>Breakfast</strong>
+                <span id="breakfasts">Not set</span>
+              </div>
+              <div class="detailItem">
+                <strong>Pick-up Service</strong>
+                <span id="pickUps">Not set</span>
               </div>
             </div>
           </section>
 
           <section class="policies">
-            <h3 class="section-title">Policies</h3>
-            <div class="policy-item">
+            <h3 class="sectionTitle">Policies</h3>
+            <div class="policyItem">
               <h4>Cancellation Policy</h4>
               <p>
                 Free cancellation up to 72 hours before check-in. Cancellations
                 within 72 hours will be charged the first night's stay.
               </p>
             </div>
-            <div class="policy-item">
+            <div class="policyItem">
               <h4>Deposit Policy</h4>
               <p>
                 A deposit of one night's stay will be charged to your credit
                 card immediately to guarantee your reservation.
               </p>
             </div>
-            <div class="policy-item">
+            <div class="policyItem">
               <h4>Pet Policy</h4>
               <p>
                 Pets are not allowed at this property. Service animals are
@@ -431,9 +444,9 @@
           </section>
 
           <section class="acknowledgement">
-            <h3 class="section-title">Acknowledgement</h3>
-            <div class="checkbox-group">
-              <label class="checkbox-label">
+            <h3 class="sectionTitle">Acknowledgement</h3>
+            <div class="checkboxGroup">
+              <label class="checkboxLabel">
                 <input type="checkbox" required />
                 <span
                   >I understand and agree to the hotel's cancellation policy and
@@ -441,8 +454,8 @@
                 >
               </label>
             </div>
-            <div class="checkbox-group">
-              <label class="checkbox-label">
+            <div class="checkboxGroup">
+              <label class="checkboxLabel">
                 <input type="checkbox" required />
                 <span
                   >I agree to the Terms of Service and Privacy Policy of
@@ -450,8 +463,8 @@
                 >
               </label>
             </div>
-            <div class="checkbox-group">
-              <label class="checkbox-label">
+            <div class="checkboxGroup">
+              <label class="checkboxLabel">
                 <input type="checkbox" />
                 <span
                   >I would like to receive exclusive offers and updates from
@@ -462,57 +475,59 @@
           </section>
         </div>
 
-        <div class="checkout-summary">
-          <h3 class="section-title">Price Details</h3>
-          <div class="price-details">
-            <div class="price-row">
-              <span>3 nights x $450</span>
-              <span>$1,350.00</span>
+        <div class="checkoutSummary">
+          <h3 class="sectionTitle">Price Details</h3>
+          <div class="priceDetails">
+            <div class="priceRow">
+              <span>Price per Night</span>
+              <span id="pricePerNight">$0.00</span>
             </div>
-            <div class="price-row">
-              <span>Taxes & Fees</span>
-              <span>$189.00</span>
+            <div class="priceRow">
+              <span>Number of Nights</span>
+              <span id="numberOfNights">0</span>
             </div>
-            <div class="price-row">
-              <span>Resort Fee</span>
-              <span>$45.00</span>
-            </div>
-            <div class="price-row total">
-              <span>Total</span>
-              <span>$1,584.00</span>
+            <div class="priceRow total">
+              <span>Total Price</span>
+              <span id="totalPrice">$0.00</span>
             </div>
           </div>
 
-          <div class="payment-method">
-            <h3 class="section-title">Payment Method</h3>
-            <div class="form-group">
-              <label class="form-label">Card Number</label>
-              <input
-                type="text"
-                class="form-input"
-                placeholder="1234 5678 9012 3456"
-              />
+          <div class="paymentMethod">
+            <h3 class="sectionTitle">Payment Method</h3>
+            <div class="formGroup">
+              <label class="formLabel">Card Number</label>
+              <input type="text" class="formInput" required />
             </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Expiration Date</label>
-                <input type="text" class="form-input" placeholder="MM/YY" />
+            <div class="formRow">
+              <div class="formGroup">
+                <label class="formLabel">Expiration Date</label>
+                <input
+                  type="text"
+                  class="formInput"
+                  placeholder="MM/YY"
+                  required
+                />
               </div>
-              <div class="form-group">
-                <label class="form-label">Security Code</label>
-                <input type="text" class="form-input" placeholder="CVC" />
+              <div class="formGroup">
+                <label class="formLabel">Security Code</label>
+                <input
+                  type="text"
+                  class="formInput"
+                  placeholder="CVC"
+                  required
+                />
               </div>
             </div>
-            <div class="form-group">
-              <label class="form-label">Name on Card</label>
-              <input type="text" class="form-input" placeholder="John Doe" />
+            <div class="formGroup">
+              <label class="formLabel">Name As Inputed In The Card</label>
+              <input type="text" class="formInput" required />
             </div>
           </div>
 
-          <button class="submit-button">Complete Reservation</button>
+          <button class="submitButton">Complete Reservation</button>
         </div>
       </div>
-    </main>
+    </div>
 
     <div class="footer">
       <div class="footerContent">
@@ -530,6 +545,146 @@
         </div>
       </div>
     </div>
-  </body>
+    <script>
+      function validateCheckoutData(data) {
+        const requiredFields = [
+          "hotelName",
+          "roomType",
+          "price",
+          "checkIn",
+          "checkOut",
+          "guests",
+          "destination",
+        ];
+
+        for (const field of requiredFields) {
+          if (!data[field]) {
+            throw new Error(`Missing required field: ${field}`);
+          }
+        }
+
+        const checkIn = new Date(data.checkIn);
+        const checkOut = new Date(data.checkOut);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (checkOut <= checkIn) {
+          throw new Error("Check-out date must be after check-in date");
+        }
+
+        if (checkIn < today) {
+          throw new Error("Check-in date must be today or later");
+        }
+
+        if (isNaN(data.price) || data.price <= 0) {
+          throw new Error("Invalid price");
+        }
+
+        if (isNaN(data.guests) || data.guests < 1) {
+          throw new Error("Invalid number of guests");
+        }
+
+        return true;
+      }
+
+      function loadReservationData() {
+        const dataString = localStorage.getItem("checkoutData");
+        if (!dataString) {
+          alert("No reservation data found. Please make a reservation first.");
+          window.location.href = "listhotel.html";
+          return;
+        }
+
+        let data;
+        try {
+          data = JSON.parse(dataString);
+          validateCheckoutData(data);
+        } catch (err) {
+          console.error("Error loading reservation data:", err);
+          alert(
+            err.message ||
+              "Invalid reservation data. Please make a new reservation."
+          );
+          window.location.href = "listhotel.html";
+          return;
+        }
+
+        document.getElementById("hotelNames").textContent = data.hotelName;
+        document.getElementById("roomTypes").textContent = data.roomType;
+        document.getElementById("breakfasts").textContent =
+          data.breakfast === "Breakfast" ? "Yes" : "No";
+        document.getElementById("pickUps").textContent =
+          data.pickUp === "Pick Up" ? "Yes" : "No";
+
+        const checkIn = new Date(data.checkIn);
+        const checkOut = new Date(data.checkOut);
+        const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+        const pricePerNight = parseFloat(data.price);
+        const totalPrice = pricePerNight * nights;
+
+        document.getElementById(
+          "pricePerNight"
+        ).textContent = `$${pricePerNight.toFixed(2)}`;
+        document.getElementById("numberOfNights").textContent = nights;
+        document.getElementById(
+          "totalPrice"
+        ).textContent = `$${totalPrice.toFixed(2)}`;
+
+        document.getElementById("checkIns").textContent = new Date(
+          data.checkIn
+        ).toLocaleDateString();
+        document.getElementById("checkOuts").textContent = new Date(
+          data.checkOut
+        ).toLocaleDateString();
+        document.getElementById("guestss").textContent = `${data.guests} ${
+          data.guests === "1" ? "Guest" : "Guests"
+        }`;
+        document.getElementById("destinations").textContent = data.destination;
+      }
+
+      document.addEventListener("DOMContentLoaded", loadReservationData);
+
+      document
+        .querySelector(".submitButton")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const form = document.querySelector(".checkoutForm");
+          const inputs = form.querySelectorAll(
+            "input[required], select[required]"
+          );
+          let isValid = true;
+
+          inputs.forEach((input) => {
+            if (!input.value.trim()) {
+              isValid = false;
+              input.style.borderColor = "red";
+            } else {
+              input.style.borderColor = "";
+            }
+          });
+
+          const checkboxes = form.querySelectorAll(
+            "input[type='checkbox'][required]"
+          );
+          checkboxes.forEach((checkbox) => {
+            if (!checkbox.checked) {
+              isValid = false;
+              checkbox.parentElement.style.color = "red";
+            } else {
+              checkbox.parentElement.style.color = "";
+            }
+          });
+
+          if (!isValid) {
+            alert("Please fill in all required fields and accept the terms.");
+            return;
+          }
+
+          alert("Reservation completed successfully!");
+          localStorage.removeItem("checkoutData");
+          window.location.href = "index.html";
+        });
+    </script>
   </body>
 </html>
