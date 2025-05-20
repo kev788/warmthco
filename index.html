@@ -408,7 +408,9 @@
             <p class="bodytwooD">
               Discover Tokyo's vibrant culture, cuisine, and skyline.
             </p>
-            <a href="listhotel.html"><button class="bodytwooButton">Explore</button></a>
+            <a href="listhotel.html"
+              ><button class="bodytwooButton">Explore</button></a
+            >
           </div>
           <div class="bodytwooPicture">
             <h5>KYOTO</h5>
@@ -529,10 +531,13 @@
               description.textContent = city.description;
               picture.appendChild(description);
 
+              const link = document.createElement("a");
+              link.href = "listhotel.html";
               const button = document.createElement("button");
               button.className = "bodytwooButton";
               button.textContent = "Explore";
-              picture.appendChild(button);
+              link.appendChild(button);
+              picture.appendChild(link);
             }
 
             picture.className = "bodytwooPicture";
